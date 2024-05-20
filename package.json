@@ -1,0 +1,17 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "A utility to compare two configuration files and show the difference.",
+  "main": "gendiff.js",
+  "bin": {
+    "gendiff": "./gendiff.js"
+  },
+  "scripts": {
+    "start": "node gendiff.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^10.0.0"
+  }
+}
