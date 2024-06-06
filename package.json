@@ -1,17 +1,24 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "A utility to compare two configuration files and show the difference.",
-  "main": "gendiff.js",
+  "description": "Compares two configuration files and shows a difference.",
+  "main": "bin/gendiff.js",
   "bin": {
-    "gendiff": "./gendiff.js"
+    "gendiff": "./bin/gendiff.js"
   },
   "scripts": {
-    "start": "node gendiff.js"
+    "test": "jest",
+    "watch": "jest --watch",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^10.0.0"
+    "commander": "^7.2.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "eslint": "^8.29.0"
   }
 }
