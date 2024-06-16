@@ -1,18 +1,22 @@
-import gendiff from '../index.js';
-import JSONResult from '../fixtures/result/test3-4.js';
-import stylishResult from '../fixtures/result/test5-6.js';
-import plainResult from '../fixtures/result/test1-2.js';
+import genDiff from "../src/index.js";
+import { fileURLToPath } from "url";
+import path from "path";
 
-describe('gendiff', () => {
-  test('PlainDiffJS-YML', () => {
-    expect(gendiff('file1.json', 'file2.yml', 'plain')).toEqual(plainResult);
-  });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const getFixturePath = (filePath) => path.join(__dirname, '..', '__fixtures__', filePath);
+const file1 = getFixturePath('file1.json');
+const file2 = getFixturePath('file2.json');
 
-  test('jsonDiffYAML-JS', () => {
-    expect(gendiff('file3.yaml', 'file4.json', 'json')).toEqual(JSONResult);
-  });
+const answer1 = `{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`;
 
-  test('stylishDiffJS-JS', () => {
-    expect(gendiff('file5.json', 'file6.json', 'stylish')).toEqual(stylishResult);
-  });
+test('gendiff json files', () => {
+  expect(genDiff(file1, file2)).toEqual(answer1);
 });
