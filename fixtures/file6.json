@@ -1,0 +1,21 @@
+{
+  "common": {
+    "setting1": "Value 1",
+    "setting2": 200,
+    "setting3": true
+  },
+  "group1": {
+    "baz": "bas",
+    "foo": "baran",
+    "nest": {
+      "key": "value"
+    }
+  },
+  "group2": {
+    "abcd": 12345,
+    "deep": {
+      "id": 45,
+      "color": "red"
+    }
+  }
+}

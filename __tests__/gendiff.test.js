@@ -1,15 +1,18 @@
-const fs = require('fs');
-const path = require('path');
-const genDiff = require('../src/index.js');
+import gendiff from '../index.js';
+import JSONResult from '../fixtures/result/test3-4.js';
+import stylishResult from '../fixtures/result/test5-6.js';
+import plainResult from '../fixtures/result/test1-2.js';
 
-const getFixturePath = (filename) => path.join(__dirname, '__fixtures__', filename);
-const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
+describe('gendiff', () => {
+  test('PlainDiffJS-YML', () => {
+    expect(gendiff('file1.json', 'file2.yml', 'plain')).toEqual(plainResult);
+  });
 
-test('gendiff flat json files', () => {
-  const filepath1 = getFixturePath('file1.json');
-  const filepath2 = getFixturePath('file2.json');
-  const expected = readFile('expected_diff.txt');
-  
-  const diff = genDiff(filepath1, filepath2);
-  expect(diff).toBe(expected);
+  test('jsonDiffYAML-JS', () => {
+    expect(gendiff('file3.yaml', 'file4.json', 'json')).toEqual(JSONResult);
+  });
+
+  test('stylishDiffJS-JS', () => {
+    expect(gendiff('file5.json', 'file6.json', 'stylish')).toEqual(stylishResult);
+  });
 });
