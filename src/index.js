@@ -1,38 +1,23 @@
 import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
+const resolvePath = (filePath) => path.resolve(process.cwd(), filePath);
 
-const readFile = (filepath) => {
-  const pathF = path.resolve(process.cwd(), filepath);
-  return JSON.parse(fs.readFileSync(pathF, 'utf-8'));
-}
+const getExtension = (filename) => path.extname(filename).slice(1);
 
-const gendiff = (filepath1, filepath2) => {
-  const data1 = readFile(filepath1);
-  const data2 = readFile(filepath2);
+const getData = (filePath) => parser({
+  data: readFileSync(filePath, 'utf-8'),
+  format: getExtension(filePath),
+});
 
-  const keys = (_.union(_.keys(data1), _.keys(data2))).sort();
-  const diffObj = keys.map((key) => {
-    // есть в первом, но нет во втором
-    if (_.has(data1, key) && !_.has(data2, key)) {
-      return `  - ${key}: ${data1[key]}`;
-    }
+const gendiff = (filePath1, filePath2, format = 'stylish') => {
+  const path1 = resolvePath(filePath1);
+  const path2 = resolvePath(filePath2);
 
-    // есть во втором, но нет в первом
-    if (_.has(data2, key) && !_.has(data1, key)) {
-      return `  + ${key}: ${data2[key]}`;
-    }
+  const data1 = getData(path1);
+  const data2 = getData(path2);
 
-    // есть в обоих, но значения разные
-    if (data1[key] !== data2[key]) {
-      return `  - ${key}: ${data1[key]}\n  + ${key}: ${data2[key]}`;
-    }
+  return formatter(getDiff(data1, data2), format);
+};
 
-    // есть в обоих, но значения одинаковые
-    return `    ${key}: ${data1[key]}`;
-  })
-  
-  return `{\n${diffObj.join('\n')}\n}`;
-}
-
-export default gendiff
+export default gendiff;
